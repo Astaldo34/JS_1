@@ -1,49 +1,48 @@
-// 1. Ко всем элементам, имеющим класс "dropdown-item" добавить еще один класс "super-dropdown", необходимо использовать методы forEach и querySelectorAll и свойство classList у элементов.
+// 1. При изменении значения в input с id="from", значение содержащееся в нем должно моментально отображаться в span. То есть при печати в input'е тег span также должен меняться.
 
-const task_1 = document.querySelectorAll('.dropdown-item');
+const inputEl = document.querySelector('#from');
+const taskOne = inputEl.nextElementSibling;
 
-task_1.forEach(el => {
-    el.classList.add('super-dropdown');
+inputEl.addEventListener('input', (e) => {
+    taskOne.textContent = inputEl.value;
+})
+
+// 2. При клике на кнопку с классом messageBtn необходимо элементу с классом message:
+// - добавить два класса: animate_animated и animate_fadeInLeftBig
+// - поставить данному элементу стиль visibility в значение 'visible'.
+
+const taskTwoBut = document.querySelector('.messageBtn');
+const taskTwo = document.querySelector('.message');
+
+taskTwoBut.addEventListener('click', (e) => {
+    taskTwo.classList.add('animate_animated', 'animate_fadeInLeftBig');
+    taskTwo.setAttribute("style", "visible: visibility");
+})
+
+// 3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, при вводе в данное поле, произвести проверку:
+// - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
+// - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
+
+const formEl = document.querySelector('form');
+const formField = formEl.querySelectorAll('.form-control');
+const formSub = formEl.querySelector('button')
+
+formEl.addEventListener('submit', (e) => {
+    formField.forEach((child) => {
+        if (child.value == "") {
+            e.preventDefault;
+            child.classList.add('error');
+        }
+    }); 
 });
 
-// 2. У элемента с классом btn необходимо убрать класс "btn-secondary", если он присутствует у этого элемента, либо добавить, если такого класса у элемента не было.
-
-const task_2 = document.querySelectorAll('.btn');
-
-task_2.forEach(el => {
-    if (el.classList.contains('btn-secondary')) {
-        el.classList.remove('btn-secondary');
-    } else {
-        el.classList.add('btn-secondary');
-    }
-    
+formField.forEach(el => {
+    el.addEventListener('input', (e) => {
+        if (el.value == "") {
+            el.classList.add('error');
+        } else {
+            el.classList.remove('error');
+        }
+        console.log(el.value);
+    })
 });
-
-// 3. Необходимо удалить класс "dropdown-menu" у элемента, у которого присутствует класс "menu".
-
-const task_3 = document.querySelectorAll('.menu');
-
-task_3.forEach(el => {
-    el.classList.remove('dropdown-menu'); 
-});
-
-// 4. Используя метод insertAdjacentHTML добавьте после div'a с классом "dropdown" следующую разметку:
-// `<a href="#">link</a>`
-
-const task_4 = document.querySelector('div[class="dropdown"]');
-task_4.insertAdjacentHTML("afterBegin", '<a href="#">link</a>');
-
-// 5. У элемента с id "dropdownMenuButton" замените id на "superDropdown".
-
-const task_5 = document.querySelector('#dropdownMenuButton');
-task_5.setAttribute("id", "superDropdown");
-
-// 6. Добавьте атрибут data-dd со значением 3 элементу у которого существует атрибут "aria-labelledby" равный "dropdownMenuButton" используя dataset.
-
-const task_6 = document.querySelector('[aria-labelledby="dropdownMenuButton"]');
-task_6.dataset.dd = "3";
-
-// 7. Удалите атрибут type у элемента с классом "dropdown-toggle".
-
-const task_7 = document.querySelector('.dropdown-toggle');
-task_7.removeAttribute("type");
