@@ -1,0 +1,19 @@
+.main {
+    display: grid;
+    gap: 10px;
+    align-items: center;
+    grid-template: 1fr/repeat(5, 1fr);
+}
+
+.person__block {
+    width: 200px;
+}
+
+.person__block__header {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.person__block__info {
+    white-space: pre-wrap;
+}
