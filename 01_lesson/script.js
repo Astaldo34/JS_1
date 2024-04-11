@@ -1,49 +1,38 @@
+// Напишите HTTP сервер и реализуйте два обработчика, где:
+// - По URL “/” будет возвращаться страница, на которой есть гиперссылка на
+// вторую страницу по ссылке “/about”
+// - А по URL “/about” будет возвращаться страница, на которой есть гиперссылка
+// на первую страницу “/”
+// - Также реализуйте обработку несуществующих роутов (404).
+// - * На каждой странице реализуйте счетчик просмотров. Значение счетчика
+// должно увеличиваться на единицу каждый раз, когда загружается страница
 
-// 1) Дан массив const arr = [1, 5, 7, 9] с помощью Math.min и spread оператора, найти минимальное число в массиве, решение задание должно состоять из одной строки
+const http = require('http');
 
-const arr = [1, 5, 7, 9];
-console.log(Math.min(...arr));
-
-// 2) Напишите функцию createCounter, которая создает счетчик и возвращает объект с двумя методами: increment и decrement. Метод increment должен увеличивать значение счетчика на 1, а метод decrement должен уменьшать значение счетчика на 1. Значение счетчика должно быть доступно только через методы объекта, а не напрямую.
-
-const createCounter = () => {
-    let value = 0;
-    return {
-        increment() {
-            value ++;
-            return value;
-        },
-        decrement() {
-            value --;
-            return value;
-        }
-    }
-}
-
-const counterOne = createCounter();
-console.log(counterOne.increment())
-console.log(counterOne.increment())
-console.log(counterOne.decrement())
-
-// 3) Напишите рекурсивную функцию findElementByClass, которая принимает корневой элемент дерева DOM и название класса в качестве аргументов и возвращает первый найденный элемент с указанным классом в этом дереве.
-
-let serchElement = [];
-function findElementByClass(rootEl, classEl) {
-   if (rootEl.hasChildNodes()) {
-      for (let element of rootEl.children) {
-         if (element.className === classEl) {
-            serchElement.push(element);
-            if (serchElement[0].className !== classEl) {
-               serchElement = [];
-               serchElement.push(element);
-            }
-         }
-         findElementByClass(element, classEl);
-      }
+const server = http.createServer((req, res) => {
+   console.log("Запрос получен");
+   if (req.url === '/') {
+      res.writeHead(200, {
+         'Content-Type': 'text/html; charset=UTF8',
+      })
+      res.end('home');
+   } else if (req.url === '/about') {
+      res.writeHead(200, {
+         'Content-Type': 'text/html; charset=UTF8',
+      })
+      res.end('about.html');
+   } else {
+      res.writeHead(404, {
+         'Content-Type': 'text/html; charset=UTF8',
+      })
+      res.end('Страница не найдена');
    }
-   return serchElement[0];
-}
+   
+})
 
-const rootElement = document.querySelector('.main');
-const targetElement = findElementByClass(rootElement, 'prod__block__item');
-console.log(targetElement);
+const port = 3000;
+server.listen(port, () => {
+   console.log("Заработало")
+})
+
+//???? Как запускать страницы то ? Ни на лекции ни в семенаре ни словечка. В сети в основном речь про express
